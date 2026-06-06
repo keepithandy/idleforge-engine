@@ -1,0 +1,67 @@
+# Contributing to IdleForge RPG Engine
+
+Thanks for helping improve IdleForge RPG Engine.
+
+## Project Goals
+
+- Keep the repo a lightweight browser RPG engine starter.
+- Keep the demo working at all times.
+- Keep engine code generic.
+- Keep content files separate from engine logic.
+- Keep the project understandable for beginners.
+
+## Coding Style
+
+- Use plain HTML, CSS, and JavaScript only.
+- Prefer small, readable changes over large rewrites.
+- Keep names generic in engine files.
+- Keep formatting consistent with the surrounding code.
+- Add comments only when a section would otherwise be hard to follow.
+
+## Keep Engine Generic
+
+Engine files should not contain theme-specific lore, names, or story text.
+
+Good engine code handles:
+
+- state
+- combat
+- inventory
+- loot
+- saving
+- rendering
+
+## Keep Demo Content Separate
+
+Put demo-specific data in `js/content/` instead of engine files.
+
+- `game.config.js` for theme settings
+- `items.js` for equipment and sellable items
+- `enemies.js` for encounters and rewards
+- `zones.js` for floor mapping
+
+## Avoid Project-Specific Lore In Engine Files
+
+Do not add demo lore, region names, character names, or world-specific labels to engine code.
+
+Engine code should stay reusable across different RPG themes.
+
+## Test Checklist Before Commit
+
+- Open `index.html` directly in a browser.
+- Run at least one fight.
+- Verify XP increases after combat.
+- Verify currency changes after rewards and selling.
+- Verify loot can be equipped.
+- Verify save, export, import, and reset still work.
+- Refresh the page and confirm the state reloads.
+- Check that visible labels still read like an engine starter, not a one-off game.
+
+## Suggested Branch And Commit Workflow
+
+1. Create a short branch name for the change.
+2. Make one focused change set.
+3. Test the demo locally.
+4. Commit with a clear message that describes the user-facing result.
+5. Keep follow-up changes small and separate when possible.
+

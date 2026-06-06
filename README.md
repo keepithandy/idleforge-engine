@@ -1,142 +1,111 @@
-# IdleForge v0.2
+# IdleForge RPG Engine
 
-IdleForge is a small browser-based incremental RPG engine. It is meant to be a toolkit for making different games with the same core engine, not a one-off Rat Cellar prototype.
+IdleForge RPG Engine is a lightweight open-source browser RPG and incremental RPG engine built with plain HTML, CSS, and JavaScript.
 
-## Run
+It is designed as a starter foundation for small browser RPGs: simple to run, easy to read, and structured so reusable engine logic stays separate from demo content.
 
-Open `index.html` directly in a browser. No server, build step, or package install is required.
+## What IdleForge Is
 
-## Project Layout
+- A browser-first RPG engine foundation.
+- A plain HTML/CSS/JS project with no build step.
+- A content-driven starter that can power different RPG themes.
+- A working demo that proves the engine loop, save flow, and UI structure.
 
-- `index.html` wires the page together and loads the plain HTML/CSS/JS files.
-- `styles/main.css` controls layout and presentation.
-- `js/engine/` contains generic engine code for state, combat, inventory, loot, save handling, and rendering.
-- `js/content/` contains the game-specific demo data you edit to make a different game.
-- `README.md` explains how to work with the project.
-- `DESIGN_NOTES.md` describes the scope and naming rules for this version.
+## Current Prototype Status
 
-## How The Engine Is Split
+- The current loaded demo is Rat Cellar.
+- The combat loop, XP gain, currency, loot, equipment, selling, save, export/import, and reset flows are working.
+- This repo is still a prototype foundation, not a full content pack.
+- The current focus is engine identity, documentation, and repo structure.
 
-Engine files should stay generic. They should work with any theme that uses the same data shape.
+## How To Run Locally
 
-Content files should hold the demo theme, names, enemies, items, and zone mapping.
+1. Open `index.html` directly in a browser.
+2. No server is required.
+3. No package install is required.
+4. The game should load and play from a local file path.
 
-## Edit Items
+## Current Features
 
-Edit `js/content/items.js` to add, remove, or rebalance equipment.
+- Turn-based fight resolution.
+- XP and level progression.
+- Currency rewards and spending through selling.
+- Loot drops and item inventory.
+- Equipment slots and stat aggregation.
+- Save/load using browser storage.
+- Export/import for moving saves between browsers.
+- Reset for starting fresh.
 
-Each item uses:
+## Folder Structure
 
-- `id`: stable internal identifier
-- `name`: what the player sees
-- `type`: optional broad category for your own organization
-- `slot`: which equipment slot it uses
-- `attack`: attack bonus
-- `defense`: defense bonus
-- `price`: sell value reference
-- `description`: short flavor text
+- `index.html` is the entry point and visible shell.
+- `styles/` contains the shared presentation layer.
+- `js/engine/` contains generic engine logic.
+- `js/content/` contains demo content and game-specific data.
+- `docs/` contains engine rules and contributor guidance.
+- `README.md` explains the repo at a high level.
+- `LICENSE` defines the open-source terms.
 
-Rules:
+## How Content Files Work
 
-- Keep item `id` values unique.
-- If you change an item `id`, also update any enemy loot tables that reference it.
-- If you add a new slot, update the engine state and UI together.
+Content files define the playable demo data the engine consumes.
 
-## Edit Enemies
+- `js/content/game.config.js` sets the title, currency label, floor cap, save key, and base player stats.
+- `js/content/items.js` defines equipment and sellable items.
+- `js/content/enemies.js` defines encounters, rewards, and loot tables.
+- `js/content/zones.js` maps floors to zone names and enemy ids.
 
-Edit `js/content/enemies.js` to change the combat encounters.
+These files are the main place to build a new RPG theme without rewriting the engine.
 
-Each enemy uses:
+## Engine Logic vs Demo Content
 
-- `id`: stable internal identifier
-- `name`: visible name
-- `floor`: the floor where this enemy is used
-- `hp`: hit points
-- `attack`: base attack
-- `defense`: base defense
-- `xp`: experience reward
-- `currency`: currency reward
-- `loot`: array of item ids that can drop
+Engine files should stay generic and reusable.
 
-Rules:
+- Engine files handle state, combat, loot, inventory, saves, and rendering.
+- Content files define the theme, names, rewards, and progression data.
+- Engine code should not contain demo lore or theme-specific naming.
+- Content files may change completely from one game theme to another.
 
-- Keep enemy `id` values unique.
-- Keep `loot` item ids valid.
-- Keep floor values aligned with the zone list in `js/content/zones.js`.
+For more detail, see:
 
-## Edit Zones
+- [`docs/engine-principles.md`](docs/engine-principles.md)
+- [`docs/content-vs-engine.md`](docs/content-vs-engine.md)
 
-Edit `js/content/zones.js` to map floors to the enemy for that floor and to name the zone.
+## How To Edit The Demo
 
-Each zone uses:
+If you want to make a new RPG theme, start here:
 
-- `floor`: the floor number
-- `enemy`: the enemy id used on that floor
-- `title`: the zone name shown in the UI
+1. Edit `js/content/game.config.js` to change the title, currency name, and floor cap.
+2. Edit `js/content/items.js` to replace the item list.
+3. Edit `js/content/enemies.js` to replace the encounter list.
+4. Edit `js/content/zones.js` to rename the floor map.
+5. Refresh the browser and test a few fights.
+6. Use Reset Save if you want a clean run.
 
-Rules:
+Keep ids stable when you can, and update any references if you rename content ids.
 
-- Every floor from `1` through `maxFloor` should have a zone entry.
-- The floor progression is controlled by `js/content/game.config.js`.
-- The engine picks the current zone from the player’s floor automatically.
+## Contribution Note
 
-## Change Game Title, Currency, And Max Floor
+This is an open-source starter project. Contributions should keep the engine generic, preserve the working demo, and keep content separated from core logic.
 
-Edit `js/content/game.config.js`.
+Before opening a change, run the test checklist in `CONTRIBUTING.md`.
 
-Common values:
+## Current Limitations
 
-- `title`: browser title and in-game heading
-- `currencyName`: the currency label shown in the UI
-- `maxFloor`: the highest floor the demo can reach
-- `saveKey`: localStorage key used for saves
+- Only one demo theme is loaded right now.
+- There is no build system.
+- There is no plugin system yet.
+- There is no save migration layer yet.
+- There is no formal content loader for multiple themes yet.
+- The project is intentionally small and focused on the starter engine loop.
 
-If you change `maxFloor`, make sure `js/content/zones.js` includes matching floors.
+## Next Roadmap Steps
 
-## Reset Save Data During Testing
+See [`ROADMAP.md`](ROADMAP.md) for the planned phases:
 
-The game autosaves to `localStorage`.
+- v0.3 content separation
+- v0.4 multi-example loading
+- v0.5 save migration docs
+- v0.6 hooks/plugin foundation
+- v1.0 stable starter release
 
-Use one of these:
-
-- Click **Reset Save** in the UI.
-- Use **Export Save** and **Import Save** to move data between browsers.
-- Clear the site data in your browser devtools if you want a full manual reset.
-
-The reset button should always return the game to a fresh state.
-
-## What Engine Files Should Contain
-
-Keep engine files generic and reusable:
-
-- `js/engine/state.js`: base state, lookup helpers, and new-game state creation
-- `js/engine/save.js`: load, save, export, import, and reset behavior
-- `js/engine/combat.js`: fight resolution and level-up logic
-- `js/engine/inventory.js`: equip, sell, and stat aggregation
-- `js/engine/loot.js`: drop handling
-- `js/engine/render.js`: screen updates and event wiring
-
-Engine files should not contain theme-specific names, lore, or unique content lists.
-
-## What Engine Files Should Not Contain
-
-Avoid putting these in engine code:
-
-- demo enemy names
-- demo item names
-- zone titles
-- special story text
-- theme-specific progression rules
-
-Those belong in `js/content/`.
-
-## Make Your Own Game
-
-1. Open `js/content/game.config.js` and change the title, currency name, and floor cap.
-2. Replace the item list in `js/content/items.js` with your own gear.
-3. Replace the enemy list in `js/content/enemies.js` with your own encounters.
-4. Replace the zone map in `js/content/zones.js` with your own floor layout.
-5. Refresh `index.html` in the browser and test a few fights.
-6. Use **Reset Save** if you want a clean test run.
-
-If you keep the same data shape, the engine can power a different incremental RPG without changing the core code.

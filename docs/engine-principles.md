@@ -1,0 +1,56 @@
+# Engine Principles
+
+IdleForge RPG Engine is meant to stay small, browser-first, and easy to understand.
+
+## Data-Driven Content
+
+Game content should live in data files where possible.
+
+- The engine reads data.
+- Content files define the playable theme.
+- New RPG ideas should usually start with data changes, not engine rewrites.
+
+## Plain Browser-First Approach
+
+- Open `index.html` directly.
+- No build tools yet.
+- No bundler required.
+- No package install required for normal play.
+
+This keeps the project approachable and easy to share.
+
+## Generic Engine Vocabulary
+
+Use neutral terms in engine files.
+
+Examples:
+
+- player
+- enemy
+- item
+- zone
+- floor
+- inventory
+- equipment
+- save
+- reward
+
+Avoid theme-specific labels inside engine code.
+
+## Small Examples Over Giant Demos
+
+The engine should prove the idea with small, readable examples.
+
+- Keep the demo focused.
+- Show one or two systems well.
+- Avoid packing the starter with too many mechanics too early.
+
+## Stability Before Features
+
+Add new systems only after the current ones are stable.
+
+- protect the working demo
+- keep saves reliable
+- keep the UI understandable
+- keep changes easy to review
+
