@@ -1,6 +1,6 @@
 # Content vs Engine
 
-IdleForge works best when engine logic and demo content stay separate.
+IdleForge works best when engine logic and example content stay separate.
 
 ## Engine Files Should Not Contain Demo Lore
 
@@ -18,7 +18,7 @@ in engine code.
 
 ## Content Files Define Theme And Game Data
 
-Content files are where you change the game theme.
+Example files are where you change the game theme.
 
 - title and currency labels
 - enemy lists
@@ -54,8 +54,7 @@ These belong in content files, not engine logic:
 ## Rules For Future Contributors
 
 - Keep engine files generic.
-- Put demo-specific values in `js/content/`.
+- Put example-specific values in `examples/`.
 - Update docs when a data shape changes.
 - Test the demo after every change.
 - Do not hide content rules inside engine logic.
-

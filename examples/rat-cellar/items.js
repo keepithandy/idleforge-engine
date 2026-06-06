@@ -1,5 +1,5 @@
-// Add new gear here. The engine only cares about the shared item fields below.
-// If you rename an item id, update any enemy loot list that points to it.
+// Example item data for Rat Cellar.
+// The engine only cares about the shared item fields below.
 window.ITEMS = [
   { id: "stick", name: "Stick", type: "weapon", slot: "weapon", attack: 2, defense: 0, price: 4, description: "A sturdy splinter of wood." },
   { id: "cloth-cap", name: "Cloth Cap", type: "head", slot: "head", attack: 0, defense: 1, price: 5, description: "Soft, patched, and barely protective." },

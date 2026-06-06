@@ -1,5 +1,5 @@
-// Edit this file first when you want to make a new version of the game.
-// Keep the values simple: the engine reads these settings at startup and during save/load.
+// Example game config for the currently loaded sample content.
+// Keep the engine title generic and let the example only define data values.
 window.GAME_CONFIG = {
   title: "IdleForge RPG Engine",
   currencyName: "Coins",

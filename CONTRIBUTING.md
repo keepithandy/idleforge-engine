@@ -7,7 +7,7 @@ Thanks for helping improve IdleForge RPG Engine.
 - Keep the repo a lightweight browser RPG engine starter.
 - Keep the demo working at all times.
 - Keep engine code generic.
-- Keep content files separate from engine logic.
+- Keep example content separate from engine logic.
 - Keep the project understandable for beginners.
 
 ## Coding Style
@@ -31,9 +31,9 @@ Good engine code handles:
 - saving
 - rendering
 
-## Keep Demo Content Separate
+## Keep Example Content Separate
 
-Put demo-specific data in `js/content/` instead of engine files.
+Put example-specific data in `examples/` instead of engine files.
 
 - `game.config.js` for theme settings
 - `items.js` for equipment and sellable items
@@ -64,4 +64,3 @@ Engine code should stay reusable across different RPG themes.
 3. Test the demo locally.
 4. Commit with a clear message that describes the user-facing result.
 5. Keep follow-up changes small and separate when possible.
-

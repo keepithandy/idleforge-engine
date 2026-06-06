@@ -8,7 +8,7 @@ IdleForge is a generic browser incremental RPG engine. This pass proves that the
 
 Engine code lives in `js/engine/`. It should focus on reusable systems such as state, combat, inventory, loot, save handling, and UI rendering.
 
-Demo content lives in `js/content/`. It should define the sample theme, item names, enemy names, zone names, and config values.
+Example content lives in `examples/`. It should define the sample theme, item names, enemy names, zone names, and config values.
 
 ## Naming Rules
 

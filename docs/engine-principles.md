@@ -4,10 +4,10 @@ IdleForge RPG Engine is meant to stay small, browser-first, and easy to understa
 
 ## Data-Driven Content
 
-Game content should live in data files where possible.
+Game content should live in example data files where possible.
 
 - The engine reads data.
-- Content files define the playable theme.
+- Example files define the playable theme.
 - New RPG ideas should usually start with data changes, not engine rewrites.
 
 ## Plain Browser-First Approach
@@ -41,7 +41,7 @@ Avoid theme-specific labels inside engine code.
 
 The engine should prove the idea with small, readable examples.
 
-- Keep the demo focused.
+- Keep the example focused.
 - Show one or two systems well.
 - Avoid packing the starter with too many mechanics too early.
 
@@ -53,4 +53,3 @@ Add new systems only after the current ones are stable.
 - keep saves reliable
 - keep the UI understandable
 - keep changes easy to review
-

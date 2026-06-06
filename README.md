@@ -2,18 +2,18 @@
 
 IdleForge RPG Engine is a lightweight open-source browser RPG and incremental RPG engine built with plain HTML, CSS, and JavaScript.
 
-It is designed as a starter foundation for small browser RPGs: simple to run, easy to read, and structured so reusable engine logic stays separate from demo content.
+It is designed as a starter foundation for small browser RPGs: simple to run, easy to read, and structured so reusable engine logic stays separate from example game content.
 
 ## What IdleForge Is
 
 - A browser-first RPG engine foundation.
 - A plain HTML/CSS/JS project with no build step.
 - A content-driven starter that can power different RPG themes.
-- A working demo that proves the engine loop, save flow, and UI structure.
+- A working example game that proves the engine loop, save flow, and UI structure.
 
 ## Current Prototype Status
 
-- The current loaded demo is Rat Cellar.
+- The current loaded example is Rat Cellar.
 - The combat loop, XP gain, currency, loot, equipment, selling, save, export/import, and reset flows are working.
 - This repo is still a prototype foundation, not a full content pack.
 - The current focus is engine identity, documentation, and repo structure.
@@ -41,48 +41,58 @@ It is designed as a starter foundation for small browser RPGs: simple to run, ea
 - `index.html` is the entry point and visible shell.
 - `styles/` contains the shared presentation layer.
 - `js/engine/` contains generic engine logic.
-- `js/content/` contains demo content and game-specific data.
+- `examples/rat-cellar/` contains the loaded example game data.
+- `js/content/` is deprecated and only documents the old content location.
 - `docs/` contains engine rules and contributor guidance.
 - `README.md` explains the repo at a high level.
 - `LICENSE` defines the open-source terms.
 
-## How Content Files Work
+## Engine Vs Example Content
 
-Content files define the playable demo data the engine consumes.
+The engine stays generic. Example content defines the playable theme the engine consumes.
 
-- `js/content/game.config.js` sets the title, currency label, floor cap, save key, and base player stats.
-- `js/content/items.js` defines equipment and sellable items.
-- `js/content/enemies.js` defines encounters, rewards, and loot tables.
-- `js/content/zones.js` maps floors to zone names and enemy ids.
+- `js/engine/` handles state, combat, loot, inventory, saves, and rendering.
+- `examples/rat-cellar/game.config.js` sets the title, currency label, floor cap, save key, and base player stats.
+- `examples/rat-cellar/items.js` defines equipment and sellable items.
+- `examples/rat-cellar/enemies.js` defines encounters, rewards, and loot tables.
+- `examples/rat-cellar/zones.js` maps floors to zone names and enemy ids.
+- `js/engine/content-loader.js` records which example is currently loaded.
 
 These files are the main place to build a new RPG theme without rewriting the engine.
 
-## Engine Logic vs Demo Content
+## Loaded Example
 
-Engine files should stay generic and reusable.
+- Loaded example: Rat Cellar
+- Example path: `examples/rat-cellar`
+- Example name: Rat Cellar
 
-- Engine files handle state, combat, loot, inventory, saves, and rendering.
-- Content files define the theme, names, rewards, and progression data.
-- Engine code should not contain demo lore or theme-specific naming.
-- Content files may change completely from one game theme to another.
+Rat Cellar is included as Example Game #1 only. It is not the identity of the engine.
 
 For more detail, see:
 
 - [`docs/engine-principles.md`](docs/engine-principles.md)
 - [`docs/content-vs-engine.md`](docs/content-vs-engine.md)
 
-## How To Edit The Demo
+## How To Edit The Rat Cellar Example
 
 If you want to make a new RPG theme, start here:
 
-1. Edit `js/content/game.config.js` to change the title, currency name, and floor cap.
-2. Edit `js/content/items.js` to replace the item list.
-3. Edit `js/content/enemies.js` to replace the encounter list.
-4. Edit `js/content/zones.js` to rename the floor map.
+1. Edit `examples/rat-cellar/game.config.js` to change the example title, currency name, and floor cap.
+2. Edit `examples/rat-cellar/items.js` to replace the item list.
+3. Edit `examples/rat-cellar/enemies.js` to replace the encounter list.
+4. Edit `examples/rat-cellar/zones.js` to rename the floor map.
 5. Refresh the browser and test a few fights.
 6. Use Reset Save if you want a clean run.
 
 Keep ids stable when you can, and update any references if you rename content ids.
+
+## How To Add Future Examples
+
+1. Create a new folder under `examples/`, such as `examples/new-game-name/`.
+2. Add `game.config.js`, `items.js`, `enemies.js`, and `zones.js`.
+3. Update `index.html` to load the new example scripts.
+4. Keep engine code in `js/engine/` generic and reusable.
+5. Keep example-specific lore, names, and data inside the example folder.
 
 ## Contribution Note
 
@@ -96,7 +106,7 @@ Before opening a change, run the test checklist in `CONTRIBUTING.md`.
 - There is no build system.
 - There is no plugin system yet.
 - There is no save migration layer yet.
-- There is no formal content loader for multiple themes yet.
+- There is no formal multi-example switcher yet.
 - The project is intentionally small and focused on the starter engine loop.
 
 ## Next Roadmap Steps
@@ -108,4 +118,3 @@ See [`ROADMAP.md`](ROADMAP.md) for the planned phases:
 - v0.5 save migration docs
 - v0.6 hooks/plugin foundation
 - v1.0 stable starter release
-

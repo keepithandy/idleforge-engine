@@ -1,5 +1,5 @@
-// Enemies define the combat encounter for a floor.
-// Keep `id` stable, because zones point to enemies by id.
+// Example enemy data for Rat Cellar.
+// Keep ids stable because zones point to enemies by id.
 window.ENEMIES = [
   { id: "rat", name: "Rat", floor: 1, hp: 10, attack: 3, defense: 0, xp: 8, currency: 3, loot: ["stick"] },
   { id: "big-rat", name: "Big Rat", floor: 2, hp: 14, attack: 4, defense: 1, xp: 11, currency: 4, loot: ["cloth-cap", "stick"] },

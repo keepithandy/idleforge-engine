@@ -9,11 +9,11 @@
 
 - Reframe the repo as an open-source browser RPG engine.
 - Add README, contributing, roadmap, and principles docs.
-- Make the visible UI describe the engine and loaded demo clearly.
+- Make the visible UI describe the engine and loaded example clearly.
 
 ## v0.3 Demo And Content Separation
 
-- Separate demo content more cleanly from shared engine code.
+- Separate example content more cleanly from shared engine code.
 - Improve the data shape and document content editing rules.
 - Keep the working demo intact.
 
@@ -40,4 +40,3 @@
 - Present a stable starter engine for browser RPG projects.
 - Keep the demo simple, readable, and easy to replace.
 - Treat the repo as an engine foundation rather than a single game.
-

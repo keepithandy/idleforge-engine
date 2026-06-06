@@ -1,4 +1,4 @@
-// Zones map floors to an enemy and a display name.
+// Example zone data for Rat Cellar.
 // The engine uses the floor number to choose the current zone automatically.
 window.ZONES = [
   { floor: 1, enemy: "rat", title: "Moldy Entryway" },
