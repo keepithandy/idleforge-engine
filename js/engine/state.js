@@ -2,10 +2,10 @@ window.GameState = {
   player: null,
   floor: 1,
   inventory: [],
-  equipment: { weapon: null, head: null, feet: null, offhand: null, trinket: null },
+  equipment: { weapon: null, head: null, body: null, feet: null, offhand: null, trinket: null },
   log: [],
   completed: false,
-  version: 1
+  version: 2
 };
 
 window.cloneState = function cloneState(state) {
@@ -29,9 +29,9 @@ window.createNewState = function createNewState() {
     player: { ...window.GAME_CONFIG.basePlayer },
     floor: 1,
     inventory: [],
-    equipment: { weapon: null, head: null, feet: null, offhand: null, trinket: null },
+    equipment: { weapon: null, head: null, body: null, feet: null, offhand: null, trinket: null },
     completed: false,
     log: ["You enter the cellar."],
-    version: 1
+    version: 2
   };
 };

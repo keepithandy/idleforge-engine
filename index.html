@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IdleForge Demo — Rat Cellar</title>
+  <title>IdleForge v0.2</title>
   <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
@@ -11,8 +11,8 @@
     <header class="hero">
       <div>
         <p class="eyebrow">IdleForge Demo</p>
-        <h1>Rat Cellar Prototype</h1>
-        <p class="subtitle">Clear Floor 10, survive the cellar, and grow stronger between fights.</p>
+        <h1>IdleForge v0.2</h1>
+        <p class="subtitle">A small engine demo with two sample zones. Clear Floor 20 to finish the run.</p>
       </div>
       <div class="save-actions">
         <button id="exportSaveBtn" type="button">Export Save</button>
@@ -30,6 +30,12 @@
         <div id="playerStats" class="stats"></div>
         <div class="progress">
           <div class="progress-label">
+            <span>Zone</span>
+            <span id="zoneText"></span>
+          </div>
+        </div>
+        <div class="progress">
+          <div class="progress-label">
             <span>XP</span>
             <span id="xpText"></span>
           </div>
@@ -37,7 +43,7 @@
         </div>
         <div class="progress">
           <div class="progress-label">
-            <span>Floor</span>
+            <span>Goal / Max Floor</span>
             <span id="floorText"></span>
           </div>
           <div class="bar"><div id="floorBar" class="bar-fill floor"></div></div>
@@ -61,6 +67,7 @@
       </article>
     </section>
   </main>
+  <footer class="app-footer">Edit js/content files to make a different game.</footer>
 
   <script src="js/content/game.config.js"></script>
   <script src="js/content/items.js"></script>

@@ -1,17 +1,27 @@
+window.normalizeSaveState = function normalizeSaveState(data) {
+  const base = window.createNewState();
+  const source = data && typeof data === "object" ? data : {};
+  const player = { ...window.GAME_CONFIG.basePlayer, ...(source.player || {}) };
+  const floor = Number.isFinite(Number(source.floor)) ? Math.min(Math.max(1, Math.floor(Number(source.floor))), window.GAME_CONFIG.maxFloor) : base.floor;
+  return {
+    ...base,
+    ...source,
+    player,
+    floor,
+    equipment: { weapon: null, head: null, body: null, feet: null, offhand: null, trinket: null, ...(source.equipment || {}) },
+    inventory: Array.isArray(source.inventory) ? source.inventory.filter((id) => typeof id === "string") : [],
+    log: Array.isArray(source.log) ? source.log.filter((entry) => typeof entry === "string") : base.log,
+    completed: Boolean(source.completed) && floor >= window.GAME_CONFIG.maxFloor,
+    version: Math.max(2, Number(source.version) || 0)
+  };
+};
+
 window.loadGame = function loadGame() {
   const raw = localStorage.getItem(window.GAME_CONFIG.saveKey);
   if (!raw) return window.createNewState();
   try {
     const parsed = JSON.parse(raw);
-    return {
-      ...window.createNewState(),
-      ...parsed,
-      player: { ...window.GAME_CONFIG.basePlayer, ...(parsed.player || {}) },
-      equipment: { weapon: null, head: null, feet: null, offhand: null, trinket: null, ...(parsed.equipment || {}) },
-      inventory: Array.isArray(parsed.inventory) ? parsed.inventory : [],
-      log: Array.isArray(parsed.log) ? parsed.log : [],
-      completed: Boolean(parsed.completed)
-    };
+    return window.normalizeSaveState(parsed);
   } catch {
     return window.createNewState();
   }
@@ -34,15 +44,7 @@ window.exportSave = function exportSave() {
 window.importSave = async function importSave(file) {
   const text = await file.text();
   const data = JSON.parse(text);
-  window.GameState = {
-    ...window.createNewState(),
-    ...data,
-    player: { ...window.GAME_CONFIG.basePlayer, ...(data.player || {}) },
-    equipment: { weapon: null, head: null, feet: null, offhand: null, trinket: null, ...(data.equipment || {}) },
-    inventory: Array.isArray(data.inventory) ? data.inventory : [],
-    log: Array.isArray(data.log) ? data.log : ["Save imported."],
-    completed: Boolean(data.completed)
-  };
+  window.GameState = window.normalizeSaveState({ ...data, log: Array.isArray(data.log) ? data.log : ["Save imported."] });
   window.saveGame();
   window.render();
 };

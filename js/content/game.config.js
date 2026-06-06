@@ -1,8 +1,10 @@
+// Edit this file first when you want to make a new version of the game.
+// Keep the values simple: the engine reads these settings at startup and during save/load.
 window.GAME_CONFIG = {
-  title: "IdleForge Demo — Rat Cellar",
+  title: "IdleForge v0.2",
   currencyName: "Coins",
-  maxFloor: 10,
-  saveKey: "idleforge-rat-cellar-save-v1",
+  maxFloor: 20,
+  saveKey: "idleforge-demo-save-v2",
   basePlayer: {
     level: 1,
     xp: 0,

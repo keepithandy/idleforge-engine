@@ -19,12 +19,14 @@ window.render = function render() {
     ? `Cleared Floor ${window.GAME_CONFIG.maxFloor}`
     : `${state.floor} / ${window.GAME_CONFIG.maxFloor}`;
   document.getElementById("floorBar").style.width = `${(state.floor / window.GAME_CONFIG.maxFloor) * 100}%`;
+  const zone = window.getZoneByFloor(state.floor);
+  document.getElementById("zoneText").textContent = zone ? `${zone.title}` : "Unknown Zone";
 
   document.getElementById("enemyPreview").innerHTML = `
     <div class="enemy-card">
       <div class="details">
         <strong>${enemy.name}</strong>
-        <span class="muted">Floor ${state.floor} · ${window.getZoneByFloor(state.floor)?.title || "Cellar Depths"}</span>
+        <span class="muted">Floor ${state.floor} · ${zone?.title || "Unknown Zone"}</span>
         <span>HP ${enemy.hp} · ATK ${enemy.attack} · DEF ${enemy.defense}</span>
         <span>Rewards: ${enemy.xp} XP, ${enemy.currency} ${window.GAME_CONFIG.currencyName}</span>
       </div>
