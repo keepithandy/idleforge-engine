@@ -8,7 +8,7 @@ It is designed as a bare HTML starter foundation for small RPGs: simple to run, 
 
 Open `index.html` directly in a browser. No install step, build step, package manager, or local server is required.
 
-The default example is **Rat Cellar**. Use the Registered Examples panel to switch to **Arena Waves**, **Sewer Patrol**, or **Depth Kit Lab**.
+The default example is **Rat Cellar**. Use the Registered Examples panel to switch to **Arena Waves**, **Sewer Patrol**, **Depth Kit Lab**, or **Crystal Mines**.
 
 Run the full deterministic smoke suite from the repo root:
 
@@ -30,9 +30,9 @@ Current status: active reusable-engine prototype. The project is proving bundled
 
 ## Current Prototype Status
 
-- Current checkpoint: v0.6 Starter Validation And QoL Pass.
+- Current checkpoint: v0.7 Stable Starter Release Candidate (draft; refreshed CI and native browser sign-off still required).
 - The default loaded example is Rat Cellar.
-- The bundled example registry includes Rat Cellar, Arena Waves, Sewer Patrol, and Depth Kit Lab.
+- The bundled example registry includes Rat Cellar, Arena Waves, Sewer Patrol, Depth Kit Lab, and Crystal Mines.
 - Arena Waves, Sewer Patrol, and Depth Kit Lab are selectable from the Registered Examples panel.
 - Depth Kit Lab is a short six-depth prototype for prepare, delve, loot, upgrade, repeat pacing.
 - The selected example id is stored locally and the page reloads into that bundled example.
@@ -40,7 +40,7 @@ Current status: active reusable-engine prototype. The project is proving bundled
 - Exported save files come from the active example's `GAME_CONFIG.exportFileName`.
 - The stage-based combat loop, XP gain, currency, loot, equipment, selling, save, export/import, and reset flows are working.
 - Equipment changes remove one selected inventory entry at a time, so duplicate item ids remain safe.
-- Save versions are classified as legacy, current, future, or malformed without blocking load or import behavior.
+- Compatible legacy saves normalize safely. Future, malformed, and wrong-example saves are blocked from import or autosave so their original bytes can be exported as a backup.
 - Manifest validation now covers duplicate ids, missing files, malformed labels, and default-example registration.
 - Save smokes now cover deterministic export/import round trips and per-example save-slot isolation.
 - The starter includes keyboard skip navigation, visible focus styles, live status regions, and narrow-phone layout rules.
@@ -69,7 +69,7 @@ Current status: active reusable-engine prototype. The project is proving bundled
 - Export/import for moving saves between browsers.
 - Reset for starting fresh.
 - Registered example selector powered by `examples/examples.manifest.js`.
-- Four bundled content examples: Rat Cellar, Arena Waves, Sewer Patrol, and Depth Kit Lab.
+- Five bundled content examples: Rat Cellar, Arena Waves, Sewer Patrol, Depth Kit Lab, and Crystal Mines.
 - Separate save slots per bundled example.
 - Keyboard and narrow-phone QoL support.
 - Optional local read-only extension hooks.
@@ -96,6 +96,7 @@ node smoke_save_version_compatibility_contract.mjs
 node smoke_rat_cellar_content.mjs
 node smoke_registered_examples_content.mjs
 node smoke_depth_kit_lab_example.mjs
+node smoke_crystal_mines_example.mjs
 node smoke_example_manifest_validator.mjs
 node smoke_save_export_import_roundtrip.mjs
 node smoke_example_save_isolation.mjs
@@ -156,6 +157,7 @@ Current lanes:
 - `examples/arena-waves/` contains the secondary bundled example.
 - `examples/sewer-patrol/` contains the third bundled example.
 - `examples/depth-kit-lab/` contains the short-loop pocket prototype example.
+- `examples/crystal-mines/` contains the v0.7 documentation-driven proof example.
 - `docs/` contains engine rules and contributor guidance.
 - `tools/` contains manual validation and release utilities.
 - `.github/workflows/smoke.yml` runs `node run_smokes.mjs` in GitHub Actions.
@@ -169,7 +171,7 @@ The engine stays generic. Example content defines the playable theme the engine 
 - `js/engine/example-loader.js` chooses which bundled example scripts load.
 - `js/engine/content-loader.js` exposes generic helpers for the active example and registered examples.
 - `examples/examples.manifest.js` lists available examples.
-- `examples/rat-cellar/`, `examples/arena-waves/`, `examples/sewer-patrol/`, and `examples/depth-kit-lab/` own their theme-specific config, items, enemies, zones, save keys, and export filenames.
+- `examples/rat-cellar/`, `examples/arena-waves/`, `examples/sewer-patrol/`, `examples/depth-kit-lab/`, and `examples/crystal-mines/` own their theme-specific config, items, enemies, zones, save keys, and export filenames.
 
 These files are the main place to build a new RPG theme without rewriting the engine.
 
@@ -181,6 +183,7 @@ Depth Engine uses `currentStage` and `maxStage` for progression. Example content
 - Secondary selectable example: Arena Waves
 - Third selectable example: Sewer Patrol
 - Fourth selectable example: Depth Kit Lab
+- Fifth selectable example: Crystal Mines
 
 Rat Cellar is included as Example Game #1 only. It is not the identity of the engine. Arena Waves, Sewer Patrol, and Depth Kit Lab are additional bundled examples for selection and validation coverage.
 

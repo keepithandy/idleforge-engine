@@ -10,6 +10,7 @@ const smokeScripts = [
   "smoke_rat_cellar_content.mjs",
   "smoke_registered_examples_content.mjs",
   "smoke_depth_kit_lab_example.mjs",
+  "smoke_crystal_mines_example.mjs",
   "smoke_example_manifest_validator.mjs",
   "smoke_save_export_import_roundtrip.mjs",
   "smoke_example_save_isolation.mjs",

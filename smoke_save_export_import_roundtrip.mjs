@@ -7,6 +7,7 @@ function readLocal(path) {
 }
 
 const stored = new Map();
+let storageBlocked = false;
 let rendered = 0;
 let clickedDownload = null;
 let exportedBlob = null;
@@ -33,8 +34,14 @@ const context = vm.createContext({
     }
   },
   localStorage: {
-    getItem(key) { return stored.get(key) ?? null; },
-    setItem(key, value) { stored.set(key, value); }
+    getItem(key) {
+      if (storageBlocked) throw new Error("storage blocked");
+      return stored.get(key) ?? null;
+    },
+    setItem(key, value) {
+      if (storageBlocked) throw new Error("storage blocked");
+      stored.set(key, value);
+    }
   },
   window: null
 });
@@ -75,25 +82,51 @@ assert.equal(exportedData.currentStage, 2);
 assert.deepEqual(exportedData.inventory, ["fixture-blade"]);
 
 context.GameState = context.createNewState();
-await context.importSave({ text: async () => exportedText });
+const accepted = await context.importSave({ text: async () => exportedText });
+assert.equal(accepted.ok, true, "compatible same-example imports should succeed");
 assert.equal(context.GameState.exampleId, "roundtrip-fixture");
 assert.equal(context.GameState.player.level, 3);
 assert.equal(context.GameState.player.currency, 19);
 assert.equal(context.GameState.currentStage, 2);
 assert.deepEqual(Array.from(context.GameState.inventory), ["fixture-blade"]);
 assert.equal(stored.has(context.GAME_CONFIG.saveKey), true, "import should save normalized state");
-assert.equal(rendered, 1, "import should render once");
+assert.equal(rendered, 1, "accepted import should render once");
 
-await assert.rejects(
-  () => context.importSave({ text: async () => "{bad json" }),
-  (error) => error?.name === "SyntaxError",
-  "malformed JSON should reject"
-);
+const safeState = JSON.stringify(context.GameState);
+const safeStored = stored.get(context.GAME_CONFIG.saveKey);
+const malformed = await context.importSave({ text: async () => "{bad json" });
+assert.equal(malformed.ok, false, "malformed JSON should return a safe failure result");
+assert.equal(malformed.reason, "invalid-json", "malformed JSON should report its rejection reason");
+assert.equal(JSON.stringify(context.GameState), safeState, "malformed import must leave the active state unchanged");
+assert.equal(stored.get(context.GAME_CONFIG.saveKey), safeStored, "malformed import must leave the stored save unchanged");
 
-await context.importSave({ text: async () => JSON.stringify({ ...exportedData, exampleId: "wrong-example" }) });
-assert.equal(context.GameState.exampleId, "roundtrip-fixture", "wrong example identity should normalize to the active example");
+const wrongExample = await context.importSave({ text: async () => JSON.stringify({ ...exportedData, exampleId: "other-example" }) });
+assert.equal(wrongExample.ok, false, "cross-example imports should be rejected");
+assert.equal(wrongExample.reason, "wrong-example", "cross-example imports should report their rejection reason");
+assert.equal(JSON.stringify(context.GameState), safeState, "cross-example import must leave the active state unchanged");
+assert.equal(stored.get(context.GAME_CONFIG.saveKey), safeStored, "cross-example import must leave the stored save unchanged");
 
-await context.importSave({ text: async () => JSON.stringify({ ...exportedData, version: context.DEPTH_ENGINE_SAVE_VERSION + 1 }) });
-assert.equal(context.GameState.version, context.DEPTH_ENGINE_SAVE_VERSION + 1, "future numeric save version should remain preserved");
+const future = await context.importSave({ text: async () => JSON.stringify({ ...exportedData, version: context.DEPTH_ENGINE_SAVE_VERSION + 1 }) });
+assert.equal(future.ok, false, "future-version imports should be rejected");
+assert.equal(future.reason, "future", "future-version imports should report their rejection reason");
+assert.equal(JSON.stringify(context.GameState), safeState, "future import must leave the active state unchanged");
+assert.equal(stored.get(context.GAME_CONFIG.saveKey), safeStored, "future import must leave the stored save unchanged");
 
-console.log("Save export/import round-trip smoke passed.");
+const blockedRaw = JSON.stringify({ ...exportedData, version: context.DEPTH_ENGINE_SAVE_VERSION + 1 });
+stored.set(context.GAME_CONFIG.saveKey, blockedRaw);
+const blockedState = context.loadGame();
+assert.equal(blockedState.player.level, 1, "future stored saves should not load into the active state");
+context.GameState = blockedState;
+assert.equal(context.saveGame(), false, "blocked future saves should never be overwritten by autosave");
+assert.equal(stored.get(context.GAME_CONFIG.saveKey), blockedRaw, "future stored saves must remain byte-for-byte preserved");
+context.exportSave();
+assert.equal(clickedDownload, "roundtrip-fixture-save-blocked-backup.json", "blocked saves should export with a distinct backup filename");
+assert.equal(await exportedBlob.text(), blockedRaw, "blocked saves should export their original source text");
+
+storageBlocked = true;
+const volatileState = context.loadGame();
+context.GameState = volatileState;
+assert.equal(context.saveGame(), false, "storage failures should not throw or crash the game loop");
+assert.match(context.getDepthEngineSaveNotice(), /storage is unavailable/i, "storage failures should provide player-facing recovery guidance");
+
+console.log("Save export/import protection smoke passed.");

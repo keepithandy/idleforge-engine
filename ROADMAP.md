@@ -55,6 +55,15 @@
 - Add dedicated smoke coverage for registry identity, save identity, export naming, route length, reward flow, and Depth Kit item progression.
 - Document the example as a short manual testbed for starter users and future engine work.
 
+
+### v0.7 Stable Starter Release Candidate
+
+- Add Crystal Mines as a fifth bundled, documentation-driven example.
+- Keep all Crystal Mines identity and content inside examples/crystal-mines/.
+- Expand the release gate to the complete smoke runner.
+- Protect future, malformed, and cross-example saves from destructive import or autosave.
+- Keep the checkpoint in draft until refreshed CI and unrestricted native file:// validation complete.
+
 ## Next Planned Lanes
 
 ### Save Schema And Compatibility Hardening

@@ -7,6 +7,9 @@ window.render = function render() {
   const selectionStatus = window.getExampleSelectionStatus();
   const stageLabel = window.getStageLabel();
   const registeredExamples = window.getExampleRegistry();
+  const saveStatus = document.getElementById("saveStatus");
+
+  if (saveStatus) saveStatus.textContent = window.getDepthEngineSaveNotice?.() || "";
 
   document.title = window.GAME_CONFIG.title;
   document.getElementById("loadedExampleText").textContent = `Loaded Example: ${activeExample.name}`;
@@ -112,8 +115,14 @@ function boot() {
   resetBtn.addEventListener("click", () => window.resetSave());
   importInput.addEventListener("change", async (event) => {
     const file = event.target.files?.[0];
-    if (file) await window.importSave(file);
-    event.target.value = "";
+    try {
+      if (file) await window.importSave(file);
+    } catch {
+      window.setDepthEngineSaveNotice?.("The save could not be imported. Your current save was left unchanged.");
+      window.render();
+    } finally {
+      event.target.value = "";
+    }
   });
 
   inventoryList.addEventListener("click", (event) => {
