@@ -75,3 +75,7 @@ Any future loader should preserve the no-build-step project shape and avoid brea
 Do not put reusable engine systems, shared save migration code, DOM boot logic, cross-example helpers, build tooling, or framework dependencies inside examples.
 
 Examples should contain content data and theme-specific presentation values, not core architecture.
+
+## Crystal Mines Proof
+
+Crystal Mines is the fifth bundled example and a documentation-driven proof that a new theme can be added without editing js/engine/. Its Mine Level route, Crystals currency, content files, save key, and export filename are all owned by examples/crystal-mines/. Run node smoke_crystal_mines_example.mjs or the full node run_smokes.mjs gate after changing it.

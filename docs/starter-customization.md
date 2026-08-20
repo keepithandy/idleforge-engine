@@ -15,8 +15,8 @@ Use this when you only want to experiment quickly.
 1. Pick a bundled example under `examples/`.
 2. Edit its theme labels, items, enemies, zones, rewards, and config values.
 3. Keep the same content file order.
-4. Open `index.html` directly in a browser.
-5. Run the smoke checks before committing.
+4. Open `index.html?example=<example-id>` directly through a file:// path.
+5. Run node run_smokes.mjs before committing.
 
 This is fastest, but it changes an existing bundled example.
 
@@ -131,3 +131,7 @@ Before treating the customized starter as ready:
 - Every stage from `1` through `GAME_CONFIG.maxStage` has a zone.
 - Engine files still avoid theme-specific lore.
 - Smoke checks pass.
+
+## v0.7 Proof Example
+
+Crystal Mines follows this path as the fifth bundled example. It adds no theme-specific behavior to js/engine/. Use its focused smoke together with the full node run_smokes.mjs suite when using it as a reference.

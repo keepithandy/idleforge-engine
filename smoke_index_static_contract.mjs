@@ -10,6 +10,7 @@ const requiredIds = [
   "exportSaveBtn",
   "importSaveInput",
   "resetSaveBtn",
+  "saveStatus",
   "playerStats",
   "zoneText",
   "xpText",
